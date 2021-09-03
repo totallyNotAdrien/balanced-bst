@@ -27,6 +27,20 @@ class Tree
     output
   end
 
+  def find(value)
+    curr = @root
+    while curr
+      return curr if curr.data == value
+
+      if value < curr.data
+        curr = curr.left
+      elsif value > curr.data
+        curr = curr.right
+      end
+    end
+    curr
+  end
+
   private
 
   def build_tree(arr, start_index = 0, end_index = arr.length - 1)
