@@ -15,6 +15,33 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? "    " : "│   "}", true) if node.left
   end
 
+  def insert(value)
+    unless @root
+      @root = Node.new(value)
+      return
+    end
+
+    node = Node.new(value)
+    curr = @root
+    while curr
+      if node < curr
+        if curr.left
+          curr = curr.left
+        else
+          curr.left = node
+        end
+      elsif node > curr
+        if curr.right
+          curr = curr.right
+        else
+          curr.right = node
+        end
+      else
+        return
+      end
+    end
+  end
+
   def level_order
     output = []
     queue = [@root]
