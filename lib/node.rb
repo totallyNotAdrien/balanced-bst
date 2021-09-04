@@ -16,4 +16,8 @@ class Node
   def to_s
     @data.to_s
   end
+
+  def leaf?
+    !left && !right
+  end
 end

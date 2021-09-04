@@ -2,7 +2,7 @@ require_relative "node.rb"
 require "pry-byebug"
 
 class Tree
-  attr_reader :root
+  attr_reader :root#, :inorder_successor_parent
 
   def initialize(arr)
     arr = arr.uniq.sort
@@ -38,6 +38,33 @@ class Tree
         end
       else
         return
+      end
+    end
+  end
+
+  def delete(value)
+    #cases:
+    #del_node has no children
+    #del_node has 1 child
+    #del node has 2 children
+    #inorder_successor has no children
+    #inorder_successor has 1 child
+    node = find(value)
+    if node
+      if node.leaf?
+      elsif node.left
+
+      elsif node.right
+
+      else #two children
+        successor_parent = inorder_successor_parent(node)
+        successor = successor_parent.left
+        if successor.leaf?
+          node.data = successor.data
+          successor_parent.left = nil
+        else
+
+        end
       end
     end
   end
@@ -78,5 +105,36 @@ class Tree
     curr_root.left = build_tree(arr, start_index, mid - 1)
     curr_root.right = build_tree(arr, mid + 1, end_index)
     curr_root
+  end
+
+  def parent(node)
+    return nil if node == @root
+
+    curr = @root
+    parent = nil
+    while curr
+      return parent if node == curr
+
+      if node < curr
+        parent = curr
+        curr = curr.left
+      elsif node > curr
+        parent = curr
+        curr = curr.right
+      end
+    end
+    nil
+  end
+
+  def inorder_successor_parent(node)
+    return nil unless node.right
+
+    curr = node.right
+    parent = node
+    while curr.left
+      parent = curr
+      curr = curr.left
+    end
+    parent
   end
 end
