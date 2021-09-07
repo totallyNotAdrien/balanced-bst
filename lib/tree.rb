@@ -79,18 +79,6 @@ class Tree
     end
   end
 
-  def level_order
-    output = []
-    queue = [@root]
-    until queue.empty?
-      curr = queue.shift
-      output << curr
-      queue << curr.left if curr.left
-      queue << curr.right if curr.right
-    end
-    output
-  end
-
   def find(value)
     curr = @root
     while curr
@@ -103,6 +91,48 @@ class Tree
       end
     end
     curr
+  end
+
+  def level_order
+    output = []
+    queue = [@root]
+    until queue.empty?
+      curr = queue.shift
+      output << curr
+      queue << curr.left if curr.left
+      queue << curr.right if curr.right
+    end
+    output
+  end
+
+  def inorder(curr = @root)
+    return unless curr
+
+    arr = []
+    arr = arr + inorder(curr.left) if curr.left
+    arr << curr
+    arr = arr + inorder(curr.right) if curr.right
+    arr
+  end
+
+  def preorder(curr = @root)
+    return unless curr
+
+    arr = []
+    arr << curr
+    arr = arr + preorder(curr.left) if curr.left
+    arr = arr + preorder(curr.right) if curr.right
+    arr
+  end
+
+  def postorder(curr = @root)
+    return unless curr
+
+    arr = []
+    arr = arr + postorder(curr.left) if curr.left
+    arr = arr + postorder(curr.right) if curr.right
+    arr << curr
+    arr
   end
 
   private
