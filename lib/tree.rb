@@ -2,7 +2,7 @@ require_relative "node.rb"
 require "pry-byebug"
 
 class Tree
-  attr_reader :root#, :inorder_successor_parent
+  attr_reader :root #, :inorder_successor_parent
 
   def initialize(arr)
     arr = arr.uniq.sort
@@ -47,24 +47,34 @@ class Tree
     #del_node has no children
     #del_node has 1 child
     #del node has 2 children
-    #inorder_successor has no children
-    #inorder_successor has 1 child
-    node = find(value)
-    if node
-      if node.leaf?
-      elsif node.left
-
-      elsif node.right
-
-      else #two children
-        successor_parent = inorder_successor_parent(node)
-        successor = successor_parent.left
-        if successor.leaf?
-          node.data = successor.data
-          successor_parent.left = nil
+      #inorder_successor has no children
+      #inorder_successor has 1 child
+    del_node = find(value)
+    if del_node
+      parent = parent_node(del_node)
+      if del_node.leaf?
+        if del_node.equal?(parent.left)
+          parent.left = nil
         else
-
+          parent.right = nil
         end
+      elsif del_node.left && !del_node.right
+        if del_node.equal?(parent.left)
+          parent.left = del_node.left
+        elsif del_node.equal?(parent.right)
+          parent.right = del_node.left
+        end
+      elsif del_node.right && !del_node.left
+        if del_node.equal?(parent.left)
+          parent.left = del_node.right
+        elsif del_node.equal?(parent.right)
+          parent.right = del_node.right
+        end
+      else #two children
+        succ_node = successor(del_node)
+        temp = succ_node.data
+        delete(succ_node.data)
+        del_node.data = temp
       end
     end
   end
@@ -107,7 +117,7 @@ class Tree
     curr_root
   end
 
-  def parent(node)
+  def parent_node(node)
     return nil if node == @root
 
     curr = @root
@@ -126,15 +136,13 @@ class Tree
     nil
   end
 
-  def inorder_successor_parent(node)
-    return nil unless node.right
-
-    curr = node.right
-    parent = node
-    while curr.left
-      parent = curr
+  def successor(predecessor)
+    curr = predecessor.right
+    while curr && curr.left
       curr = curr.left
     end
-    parent
+
+    curr = predecessor unless curr
+    curr
   end
 end
