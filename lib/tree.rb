@@ -136,9 +136,13 @@ class Tree
   end
 
   def height(node)
+    return 0 unless node
+    return -1 unless find(node.data)
     return 0 if node.leaf?
+
     right_height = nil
     left_height = nil
+
     if node.right
       right_height = 1 + height(node.right)
     end
@@ -149,6 +153,27 @@ class Tree
     left_height = 0 unless left_height
 
     right_height > left_height ? right_height : left_height
+  end
+
+  def depth(node)
+    return -1 unless node
+    return -1 unless find(node.data)
+    return 0 if node.equal?(@root)
+
+    curr = @root
+    deep = 0
+    while curr
+      return deep if curr.equal?(node)
+
+      if node < curr
+        deep += 1
+        curr = curr.left
+      elsif node > curr
+        deep += 1
+        curr = curr.right
+      end
+    end
+    nil
   end
 
   private

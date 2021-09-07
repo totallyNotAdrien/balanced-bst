@@ -33,6 +33,12 @@ puts "height of root(#{tree.root.data}): #{tree.height(tree.root)}"
 node = tree.find(rand(range))
 puts "height of #{node.data}: #{tree.height(node)}"
 puts
+
+puts "depth of root(#{tree.root.data}): #{tree.depth(tree.root)}"
+node = tree.find(rand(range))
+puts "depth of #{node.data}: #{tree.depth(node)}"
+puts
+
 # puts "Tree after deleting 49:"
 # tree.delete(49)
 # tree.pretty_print
@@ -45,7 +51,7 @@ puts
 end
 puts
 
-nums = Array.new(5) { rand(range) }
-nums.each { |num| tree.insert(num) }
-puts "tree after inserting #{nums.join(", ")}:"
-tree.pretty_print
+# nums = Array.new(5) { rand(range) }
+# nums.each { |num| tree.insert(num) }
+# puts "tree after inserting #{nums.join(", ")}:"
+# tree.pretty_print
