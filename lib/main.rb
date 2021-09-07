@@ -1,7 +1,8 @@
 require_relative "tree.rb"
 
-range = 1..100
-tree = Tree.new(Array.new(40) { rand(range) })
+range = 1..63
+tree = Tree.new(Array.new(64) { rand(range) })
+tree = Tree.new(range.to_a.shuffle)
 # test_arr = [51, 21, 79, 11, 34, 68, 91, 7, 14, 28, 40, 62, 74,
 #             87, 97, 6, 9, 13, 18, 27, 30, 39, 48, 60, 64, 72, 
 #             76, 85, 90, 96, 99, 49, 100]
@@ -28,6 +29,10 @@ postorder = tree.postorder
 puts "postorder: #{postorder.map { |elem| elem.data }}"
 puts
 
+puts "height of root(#{tree.root.data}): #{tree.height(tree.root)}"
+node = tree.find(rand(range))
+puts "height of #{node.data}: #{tree.height(node)}"
+puts
 # puts "Tree after deleting 49:"
 # tree.delete(49)
 # tree.pretty_print

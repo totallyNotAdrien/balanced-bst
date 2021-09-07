@@ -135,6 +135,22 @@ class Tree
     arr
   end
 
+  def height(node)
+    return 0 if node.leaf?
+    right_height = nil
+    left_height = nil
+    if node.right
+      right_height = 1 + height(node.right)
+    end
+    if node.left
+      left_height = 1 + height(node.left)
+    end
+    right_height = 0 unless right_height
+    left_height = 0 unless left_height
+
+    right_height > left_height ? right_height : left_height
+  end
+
   private
 
   def build_tree(arr, start_index = 0, end_index = arr.length - 1)
