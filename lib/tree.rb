@@ -189,13 +189,18 @@ class Tree
     balanced?(curr_root.right)
   end
 
+  def rebalance
+    arr = inorder
+    @root = build_tree(arr)
+  end
+
   private
 
   def build_tree(arr, start_index = 0, end_index = arr.length - 1)
     return nil if start_index > end_index
 
     mid = (start_index + end_index) / 2
-    curr_root = Node.new(arr[mid])
+    curr_root = arr[mid].is_a?(Node) ? arr[mid] : Node.new(arr[mid])
     curr_root.left = build_tree(arr, start_index, mid - 1)
     curr_root.right = build_tree(arr, mid + 1, end_index)
     curr_root

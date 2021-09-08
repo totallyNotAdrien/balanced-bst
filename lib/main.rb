@@ -54,10 +54,16 @@ puts
 end
 puts
 
-nums = Array.new(5) { rand(range) }
+nums = Array.new(5) { rand(range2) }
 nums.each { |num| tree.insert(num) }
 puts "tree after inserting #{nums.join(", ")}:"
 tree.pretty_print
 puts
 
+puts "tree balanced?: #{tree.balanced?}"
+puts
+puts "tree after rebalancing:"
+tree.rebalance
+puts tree.pretty_print
+puts
 puts "tree balanced?: #{tree.balanced?}"
