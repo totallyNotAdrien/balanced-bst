@@ -1,14 +1,8 @@
 require_relative "tree.rb"
 
-range = 1..63
+range = 1..100
 range2 = 1..200
-tree = Tree.new(Array.new(64) { rand(range) })
-# tree = Tree.new(range.to_a.shuffle)
-# # test_arr = [51, 21, 79, 11, 34, 68, 91, 7, 14, 28, 40, 62, 74,
-# #             87, 97, 6, 9, 13, 18, 27, 30, 39, 48, 60, 64, 72, 
-# #             76, 85, 90, 96, 99, 49, 100]
-
-# # tree = Tree.new(test_arr)
+tree = Tree.new(Array.new(15) { rand(range) })
 
 puts "Tree:"
 tree.pretty_print
@@ -17,44 +11,22 @@ puts "tree balanced?: #{tree.balanced?}"
 puts
 
 level_order = tree.level_order
-puts "level order: #{level_order.map { |elem| elem.data }}"
-puts
-
-inorder = tree.inorder
-puts "inorder: #{inorder.map { |elem| elem.data }}"
+puts "level order: #{level_order}"
 puts
 
 preorder = tree.preorder
-puts "preorder: #{preorder.map { |elem| elem.data }}"
+puts "preorder: #{preorder}"
 puts
 
 postorder = tree.postorder
-puts "postorder: #{postorder.map { |elem| elem.data }}"
+puts "postorder: #{postorder}"
 puts
 
-puts "height of root(#{tree.root.data}): #{tree.height(tree.root)}"
-node = tree.find(inorder[rand(inorder.length)].data)
-puts "height of #{node.data}: #{tree.height(node)}"
+inorder = tree.inorder
+puts "inorder: #{inorder}"
 puts
 
-puts "depth of root(#{tree.root.data}): #{tree.depth(tree.root)}"
-node = tree.find(inorder[rand(inorder.length)].data)
-puts "depth of #{node.data}: #{tree.depth(node)}"
-puts
-
-# puts "Tree after deleting 49:"
-# tree.delete(49)
-# tree.pretty_print
-# puts
-
-5.times do
-  num = rand(range)
-  node = tree.find(num)
-  puts "find #{num}: #{node ? "found it" : "nope"}"
-end
-puts
-
-nums = Array.new(5) { rand(range2) }
+nums = Array.new(10) { rand(range2) }
 nums.each { |num| tree.insert(num) }
 puts "tree after inserting #{nums.join(", ")}:"
 tree.pretty_print
@@ -67,3 +39,20 @@ tree.rebalance
 puts tree.pretty_print
 puts
 puts "tree balanced?: #{tree.balanced?}"
+puts
+
+level_order = tree.level_order
+puts "level order: #{level_order}"
+puts
+
+preorder = tree.preorder
+puts "preorder: #{preorder}"
+puts
+
+postorder = tree.postorder
+puts "postorder: #{postorder}"
+puts
+
+inorder = tree.inorder
+puts "inorder: #{inorder}"
+puts

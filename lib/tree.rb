@@ -1,8 +1,7 @@
 require_relative "node.rb"
-require "pry-byebug"
 
 class Tree
-  attr_reader :root #, :inorder_successor_parent
+  attr_reader :root
 
   def initialize(arr)
     arr = arr.uniq.sort
@@ -43,28 +42,24 @@ class Tree
   end
 
   def delete(value)
-    #cases:
-    #del_node has no children
-    #del_node has 1 child
-    #del node has 2 children
-      #inorder_successor has no children
-      #inorder_successor has 1 child
     del_node = find(value)
+
     if del_node
       parent = parent_node(del_node)
-      if del_node.leaf?
+
+      if del_node.leaf? #no children
         if del_node.equal?(parent.left)
           parent.left = nil
         else
           parent.right = nil
         end
-      elsif del_node.left && !del_node.right
+      elsif del_node.left && !del_node.right #one child
         if del_node.equal?(parent.left)
           parent.left = del_node.left
         elsif del_node.equal?(parent.right)
           parent.right = del_node.left
         end
-      elsif del_node.right && !del_node.left
+      elsif del_node.right && !del_node.left #one child
         if del_node.equal?(parent.left)
           parent.left = del_node.right
         elsif del_node.equal?(parent.right)
@@ -99,7 +94,7 @@ class Tree
     queue = [@root]
     until queue.empty?
       curr = queue.shift
-      output << curr
+      output << curr.data
       queue << curr.left if curr.left
       queue << curr.right if curr.right
     end
@@ -107,20 +102,20 @@ class Tree
   end
 
   def inorder(curr = @root)
-    return unless curr
+    return [] unless curr
 
     arr = []
     arr = arr + inorder(curr.left) if curr.left
-    arr << curr
+    arr << curr.data
     arr = arr + inorder(curr.right) if curr.right
     arr
   end
 
   def preorder(curr = @root)
-    return unless curr
+    return [] unless curr
 
     arr = []
-    arr << curr
+    arr << curr.data
     arr = arr + preorder(curr.left) if curr.left
     arr = arr + preorder(curr.right) if curr.right
     arr
@@ -132,7 +127,7 @@ class Tree
     arr = []
     arr = arr + postorder(curr.left) if curr.left
     arr = arr + postorder(curr.right) if curr.right
-    arr << curr
+    arr << curr.data
     arr
   end
 
@@ -196,6 +191,9 @@ class Tree
 
   private
 
+  #takes a sorted array and returns the root node of a 
+  #balanced bst created from the array
+  #given an unsorted array, returns root of unbalanced bst
   def build_tree(arr, start_index = 0, end_index = arr.length - 1)
     return nil if start_index > end_index
 
