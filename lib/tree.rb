@@ -79,6 +79,7 @@ class Tree
     end
   end
 
+  #returns a node with the given value if it exists in the tree
   def find(value)
     curr = @root
     while curr
@@ -174,6 +175,18 @@ class Tree
       end
     end
     nil
+  end
+
+  def balanced?(curr_root = @root)
+    return true unless curr_root
+
+    left_height = height(curr_root.left)
+    right_height = height(curr_root.right)
+    acceptable_height_diff = (left_height - right_height).abs <= 1
+
+    acceptable_height_diff &&
+    balanced?(curr_root.left) &&
+    balanced?(curr_root.right)
   end
 
   private

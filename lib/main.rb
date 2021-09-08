@@ -1,16 +1,19 @@
 require_relative "tree.rb"
 
 range = 1..63
+range2 = 1..200
 tree = Tree.new(Array.new(64) { rand(range) })
-tree = Tree.new(range.to_a.shuffle)
-# test_arr = [51, 21, 79, 11, 34, 68, 91, 7, 14, 28, 40, 62, 74,
-#             87, 97, 6, 9, 13, 18, 27, 30, 39, 48, 60, 64, 72, 
-#             76, 85, 90, 96, 99, 49, 100]
+# tree = Tree.new(range.to_a.shuffle)
+# # test_arr = [51, 21, 79, 11, 34, 68, 91, 7, 14, 28, 40, 62, 74,
+# #             87, 97, 6, 9, 13, 18, 27, 30, 39, 48, 60, 64, 72, 
+# #             76, 85, 90, 96, 99, 49, 100]
 
-# tree = Tree.new(test_arr)
+# # tree = Tree.new(test_arr)
 
 puts "Tree:"
 tree.pretty_print
+puts
+puts "tree balanced?: #{tree.balanced?}"
 puts
 
 level_order = tree.level_order
@@ -30,12 +33,12 @@ puts "postorder: #{postorder.map { |elem| elem.data }}"
 puts
 
 puts "height of root(#{tree.root.data}): #{tree.height(tree.root)}"
-node = tree.find(rand(range))
+node = tree.find(inorder[rand(inorder.length)].data)
 puts "height of #{node.data}: #{tree.height(node)}"
 puts
 
 puts "depth of root(#{tree.root.data}): #{tree.depth(tree.root)}"
-node = tree.find(rand(range))
+node = tree.find(inorder[rand(inorder.length)].data)
 puts "depth of #{node.data}: #{tree.depth(node)}"
 puts
 
@@ -51,7 +54,10 @@ puts
 end
 puts
 
-# nums = Array.new(5) { rand(range) }
-# nums.each { |num| tree.insert(num) }
-# puts "tree after inserting #{nums.join(", ")}:"
-# tree.pretty_print
+nums = Array.new(5) { rand(range) }
+nums.each { |num| tree.insert(num) }
+puts "tree after inserting #{nums.join(", ")}:"
+tree.pretty_print
+puts
+
+puts "tree balanced?: #{tree.balanced?}"
